@@ -1,4 +1,4 @@
-﻿(() => {
+(() => {
   const cp1252 = new Map([
     [0x20ac, 0x80], [0x201a, 0x82], [0x0192, 0x83], [0x201e, 0x84],
     [0x2026, 0x85], [0x2020, 0x86], [0x2021, 0x87], [0x02c6, 0x88],
@@ -10,7 +10,7 @@
   ]);
   const decoder = new TextDecoder('utf-8');
   const repairEncoding = (value) => {
-    if (!/[Ã‚ÃƒÃ¢]/.test(value)) return value;
+    if (!/[ÂÃâ]/.test(value)) return value;
     const bytes = [];
     for (const char of value) {
       const code = char.codePointAt(0);
@@ -65,14 +65,14 @@
       input.focus();
       return;
     }
-    button.textContent = 'Youâ€™re on the list';
+    button.textContent = 'You’re on the list';
     button.disabled = true;
     input.disabled = true;
   });
 })();
 
 const interactiveUi = document.createElement('script');
-interactiveUi.src = '/interactive-ui.js';
+interactiveUi.src = '/cdl-mastery-website/interactive-ui.js';
 document.body.appendChild(interactiveUi);
 
 const footerLinks = document.querySelector('footer > div');
@@ -101,19 +101,19 @@ if (footerLinks && !footerLinks.querySelector('[href="/cdl-mastery-website/blog/
 const homepageArticles = [
   {
     href: '/cdl-mastery-website/blog/air-brakes.html',
-    tag: 'AIR BRAKES Â· 9 MIN',
+    tag: 'AIR BRAKES · 9 MIN',
     title: 'Air Brakes: Understand the System, Not Just the Answers',
     description: 'Learn how pressure, warning devices, spring brakes, brake lag, and inspection routines fit together.'
   },
   {
     href: '/cdl-mastery-website/blog/hours-of-service.html',
-    tag: 'HOURS OF SERVICE Â· 8 MIN',
-    title: 'The Core Hours-of-Service Limits Property Drivers Must Know',
+    tag: 'HOURS OF SERVICE · 8 MIN',
+    title: 'The Core Hours-of-Service Limits Property-Carrying Drivers Must Know',
     description: 'Build a clear mental model of the driving limit, duty window, break rule, and weekly limits.'
   },
   {
     href: '/cdl-mastery-website/blog/pre-trip.html',
-    tag: 'PRE-TRIP Â· 8 MIN',
+    tag: 'PRE-TRIP · 8 MIN',
     title: 'A Practical Pre-Trip Inspection Study Method',
     description: 'Use a repeatable inspection route and a simple condition, security, and function framework.'
   }
@@ -131,7 +131,7 @@ document.querySelectorAll('.article-grid article').forEach((article, index) => {
   if (description) description.textContent = content.description;
   if (link) {
     link.href = content.href;
-    link.textContent = 'Read article â†’';
+    link.textContent = 'Read article →';
   }
 });
 
@@ -140,6 +140,6 @@ if (articleHeading && !articleHeading.querySelector('[href="/cdl-mastery-website
   const allArticlesLink = document.createElement('a');
   allArticlesLink.href = '/cdl-mastery-website/blog/';
   allArticlesLink.className = 'article-all-link';
-  allArticlesLink.textContent = 'View all CDL articles â†’';
+  allArticlesLink.textContent = 'View all CDL articles →';
   articleHeading.appendChild(allArticlesLink);
 }

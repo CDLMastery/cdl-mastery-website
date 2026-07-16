@@ -46,6 +46,12 @@
   let examSecondsRemaining = 0;
   let examTimerId = null;
   let examAdvanceTimeout = null;
+  let practiceIndex = 0;
+  let practiceAnswers = Array(10).fill(null);
+  let practiceAutoAdvance = false;
+  let practiceAdvanceTimeout = null;
+  let practiceReviewIndex = 0;
+  let practiceQueue = Array.from({ length: 10 }, (_, i) => i);
 
   const stopExamTimer = () => {
     if (examTimerId) clearInterval(examTimerId);
@@ -74,7 +80,7 @@
     tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.mode === mode));
     demo.classList.remove('mode-practice', 'mode-flashcards', 'mode-exam');
     demo.classList.add(`mode-${mode}`);
-    title.textContent = mode === 'flashcards' ? 'Flashcards' : 'Exam Mode';
+    title.textContent = mode === 'flashcards' ? 'Flashcards' : mode === 'exam' ? 'Exam Mode' : 'Quick Practice';
   };
 
   const finishFlash = () => {
@@ -263,6 +269,113 @@
     stage.querySelector('.back-results').onclick = finishExam;
   };
 
+  const practiceScore = () => practiceQueue.reduce((sum, questionIndex) => sum + (practiceAnswers[questionIndex] === examQuestions[questionIndex][2] ? 1 : 0), 0);
+
+  const renderPractice = () => {
+    const questionIndex = practiceQueue[practiceIndex];
+    const question = examQuestions[questionIndex];
+    const selected = practiceAnswers[questionIndex];
+    const answered = selected !== null;
+    const correct = question[2];
+    stage.innerHTML = `<div class="practice-ui">
+      <button class="practice-back" type="button">←</button>
+      <section class="practice-head"><div class="practice-head-icon">▤</div><div><h3>General Knowledge</h3><p>Question ${practiceIndex + 1} of ${practiceQueue.length}</p></div><i><em style="width:${((practiceIndex + 1) / practiceQueue.length) * 100}%"></em></i>
+        <button class="practice-auto ${practiceAutoAdvance ? 'enabled' : ''}" type="button" role="switch" aria-checked="${practiceAutoAdvance}"><span><i>ϟ</i><b>Auto Advance</b><small>Automatically move to the next question</small></span><em></em></button>
+      </section>
+      <section class="practice-question"><span>GENERAL KNOWLEDGE</span><h3>${question[0]}</h3></section>
+      <div class="practice-answers">${question[1].map((answer, i) => `<button data-practice-answer="${i}" class="${answered && i === correct ? 'correct' : ''} ${answered && i === selected && selected !== correct ? 'wrong' : ''}"><b>${String.fromCharCode(65 + i)}</b><span>${answer}</span><i>${answered && i === correct ? '✓' : answered && i === selected && selected !== correct ? '×' : ''}</i></button>`).join('')}</div>
+      <button class="practice-next" ${answered ? '' : 'disabled'}>${practiceIndex === practiceQueue.length - 1 ? 'See Results' : 'Next Question'} &nbsp; →</button>
+    </div>`;
+    stage.querySelector('.practice-auto').onclick = () => { practiceAutoAdvance = !practiceAutoAdvance; renderPractice(); };
+    stage.querySelectorAll('[data-practice-answer]').forEach((button) => button.onclick = () => {
+      if (practiceAnswers[questionIndex] !== null) return;
+      practiceAnswers[questionIndex] = Number(button.dataset.practiceAnswer);
+      renderPractice();
+      if (practiceAutoAdvance) practiceAdvanceTimeout = setTimeout(advancePractice, 1200);
+    });
+    stage.querySelector('.practice-next').onclick = advancePractice;
+    stage.querySelector('.practice-back').onclick = () => {
+      if (practiceIndex > 0) {
+        practiceIndex -= 1;
+        renderPractice();
+      }
+    };
+  };
+
+  function advancePractice() {
+    clearTimeout(practiceAdvanceTimeout);
+    const questionIndex = practiceQueue[practiceIndex];
+    if (practiceAnswers[questionIndex] === null) return;
+    if (practiceIndex < practiceQueue.length - 1) {
+      practiceIndex += 1;
+      renderPractice();
+    } else finishPractice();
+  }
+
+  const finishPractice = () => {
+    clearTimeout(practiceAdvanceTimeout);
+    const score = practiceScore();
+    const total = practiceQueue.length;
+    const missed = total - score;
+    const percent = Math.round((score / total) * 100);
+    stage.innerHTML = `<div class="practice-result-ui">
+      <button class="practice-result-back" type="button">←</button>
+      <section class="practice-result-hero ${percent >= 80 ? 'passed' : ''}"><div><span>KEEP TRAINING</span><b>${score} of ${total} correct</b><small>${percent >= 80 ? 'TEST READY' : 'FOUNDATION BUILDING'}</small></div><strong>${percent}%</strong></section>
+      <section class="practice-feedback"><i>ϟ</i><div><h3>Performance Feedback</h3><p>${missed ? `Keep practicing. Repetition and review build mastery. ${missed} missed.` : 'Excellent work. You answered every question correctly.'}</p></div></section>
+      <div class="practice-stat-grid"><article><i>✓</i><b>${score}<small>Correct</small></b></article><article><i>×</i><b>${missed}<small>Incorrect</small></b></article></div>
+      <section class="practice-category"><i>▰</i><div><span>Category</span><b>General Knowledge</b></div></section>
+      ${missed ? '<button class="practice-retry-missed">↻ &nbsp; Retry Incorrect Answers</button>' : ''}
+      <button class="practice-review">◉ &nbsp; Review Answers</button>
+      <button class="practice-try-again">↻ &nbsp; Try Again</button>
+    </div>`;
+    stage.querySelector('.practice-review').onclick = () => {
+      practiceReviewIndex = 0;
+      const firstMiss = practiceQueue.findIndex((questionIndex) => practiceAnswers[questionIndex] !== examQuestions[questionIndex][2]);
+      if (firstMiss >= 0) practiceReviewIndex = firstMiss;
+      renderPracticeReview();
+    };
+    stage.querySelector('.practice-retry-missed')?.addEventListener('click', () => {
+      const missedQuestions = practiceQueue.filter((questionIndex) => practiceAnswers[questionIndex] !== examQuestions[questionIndex][2]);
+      missedQuestions.forEach((questionIndex) => { practiceAnswers[questionIndex] = null; });
+      practiceQueue = missedQuestions;
+      practiceIndex = 0;
+      renderPractice();
+    });
+    stage.querySelector('.practice-try-again').onclick = startPractice;
+    stage.querySelector('.practice-result-back').onclick = startPractice;
+  };
+
+  const renderPracticeReview = () => {
+    const questionIndex = practiceQueue[practiceReviewIndex];
+    const question = examQuestions[questionIndex];
+    const selected = practiceAnswers[questionIndex];
+    const correct = question[2];
+    const isCorrect = selected === correct;
+    stage.innerHTML = `<div class="practice-review-ui">
+      <button class="practice-review-title" type="button">← &nbsp; <b>Review Questions</b></button>
+      <section class="review-head ${isCorrect ? 'correct' : ''}"><i>${isCorrect ? '✓' : '×'}</i><div><h3>${isCorrect ? 'Correct' : 'Incorrect'}</h3><p>Question ${practiceReviewIndex + 1} of ${practiceQueue.length}</p></div><b>${practiceReviewIndex + 1}/${practiceQueue.length}</b><span><em style="width:${((practiceReviewIndex + 1) / practiceQueue.length) * 100}%"></em></span></section>
+      <div class="review-chips">${practiceQueue.map((itemIndex, i) => `<button data-practice-review="${i}" class="${i === practiceReviewIndex ? 'active' : ''} ${practiceAnswers[itemIndex] === examQuestions[itemIndex][2] ? 'right' : 'wrong'}">${i + 1}</button>`).join('')}</div>
+      <section class="review-question"><span>GENERAL KNOWLEDGE · REVIEW</span><h3>${question[0]}</h3></section>
+      <div class="review-answers">${question[1].map((answer, i) => `<article class="${i === correct ? 'correct-answer' : i === selected ? 'your-answer' : ''}"><b>${String.fromCharCode(65 + i)}</b><div><strong>${answer}</strong>${i === correct ? '<span>Correct Answer</span>' : i === selected ? '<span>Your Answer</span>' : ''}</div><i>${i === correct ? '✓' : i === selected ? '×' : ''}</i></article>`).join('')}</div>
+      <div class="review-nav"><button class="practice-review-prev" ${practiceReviewIndex === 0 ? 'disabled' : ''}>← &nbsp; Previous</button><button class="practice-review-next" ${practiceReviewIndex === practiceQueue.length - 1 ? 'disabled' : ''}>Next &nbsp; →</button></div>
+      <button class="practice-back-results">Back to Practice Results</button>
+    </div>`;
+    stage.querySelectorAll('[data-practice-review]').forEach((button) => button.onclick = () => { practiceReviewIndex = Number(button.dataset.practiceReview); renderPracticeReview(); });
+    stage.querySelector('.practice-review-prev').onclick = () => { if (practiceReviewIndex > 0) { practiceReviewIndex -= 1; renderPracticeReview(); } };
+    stage.querySelector('.practice-review-next').onclick = () => { if (practiceReviewIndex < practiceQueue.length - 1) { practiceReviewIndex += 1; renderPracticeReview(); } };
+    stage.querySelector('.practice-review-title').onclick = finishPractice;
+    stage.querySelector('.practice-back-results').onclick = finishPractice;
+  };
+
+  function startPractice() {
+    clearTimeout(practiceAdvanceTimeout);
+    activate('practice');
+    practiceIndex = 0;
+    practiceAnswers = Array(10).fill(null);
+    practiceQueue = Array.from({ length: 10 }, (_, i) => i);
+    renderPractice();
+  }
+
   function startExam() {
     clearTimeout(examAdvanceTimeout);
     activate('exam');
@@ -274,7 +387,8 @@
   }
 
   const practiceTab = tabs.find((tab) => tab.dataset.mode === 'practice');
-  practiceTab.addEventListener('click', () => { stopExamTimer(); demo.classList.remove('mode-flashcards', 'mode-exam'); });
+  practiceTab.addEventListener('click', startPractice);
   tabs.find((tab) => tab.dataset.mode === 'flashcards').onclick = startFlash;
   tabs.find((tab) => tab.dataset.mode === 'exam').onclick = startExam;
+  startPractice();
 })();
