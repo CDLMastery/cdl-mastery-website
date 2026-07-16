@@ -72,47 +72,47 @@
 })();
 
 const interactiveUi = document.createElement('script');
-interactiveUi.src = '/cdl-mastery-website/interactive-ui.js';
+interactiveUi.src = '/interactive-ui.js';
 document.body.appendChild(interactiveUi);
 
 const footerLinks = document.querySelector('footer > div');
-if (footerLinks && !footerLinks.querySelector('[href="/cdl-mastery-website/privacy.html"]')) {
+if (footerLinks && !footerLinks.querySelector('[href="/privacy.html"]')) {
   const privacyLink = document.createElement('a');
-  privacyLink.href = '/cdl-mastery-website/privacy.html';
+  privacyLink.href = '/privacy.html';
   privacyLink.textContent = 'Privacy Policy';
   footerLinks.appendChild(privacyLink);
 }
 
 const topNavigation = document.querySelector('.topbar nav');
-if (topNavigation && !topNavigation.querySelector('[href="/cdl-mastery-website/blog/"]')) {
+if (topNavigation && !topNavigation.querySelector('[href="/blog/"]')) {
   const blogLink = document.createElement('a');
-  blogLink.href = '/cdl-mastery-website/blog/';
+  blogLink.href = '/blog/';
   blogLink.textContent = 'Blog';
   topNavigation.appendChild(blogLink);
 }
 
-if (footerLinks && !footerLinks.querySelector('[href="/cdl-mastery-website/blog/"]')) {
+if (footerLinks && !footerLinks.querySelector('[href="/blog/"]')) {
   const blogLink = document.createElement('a');
-  blogLink.href = '/cdl-mastery-website/blog/';
+  blogLink.href = '/blog/';
   blogLink.textContent = 'CDL Blog';
   footerLinks.appendChild(blogLink);
 }
 
 const homepageArticles = [
   {
-    href: '/cdl-mastery-website/blog/air-brakes.html',
+    href: '/blog/air-brakes.html',
     tag: 'AIR BRAKES · 9 MIN',
     title: 'Air Brakes: Understand the System, Not Just the Answers',
     description: 'Learn how pressure, warning devices, spring brakes, brake lag, and inspection routines fit together.'
   },
   {
-    href: '/cdl-mastery-website/blog/hours-of-service.html',
+    href: '/blog/hours-of-service.html',
     tag: 'HOURS OF SERVICE · 8 MIN',
     title: 'The Core Hours-of-Service Limits Property-Carrying Drivers Must Know',
     description: 'Build a clear mental model of the driving limit, duty window, break rule, and weekly limits.'
   },
   {
-    href: '/cdl-mastery-website/blog/pre-trip.html',
+    href: '/blog/pre-trip.html',
     tag: 'PRE-TRIP · 8 MIN',
     title: 'A Practical Pre-Trip Inspection Study Method',
     description: 'Use a repeatable inspection route and a simple condition, security, and function framework.'
@@ -136,9 +136,9 @@ document.querySelectorAll('.article-grid article').forEach((article, index) => {
 });
 
 const articleHeading = document.querySelector('.articles .section-head');
-if (articleHeading && !articleHeading.querySelector('[href="/cdl-mastery-website/blog/"]')) {
+if (articleHeading && !articleHeading.querySelector('[href="/blog/"]')) {
   const allArticlesLink = document.createElement('a');
-  allArticlesLink.href = '/cdl-mastery-website/blog/';
+  allArticlesLink.href = '/blog/';
   allArticlesLink.className = 'article-all-link';
   allArticlesLink.textContent = 'View all CDL articles →';
   articleHeading.appendChild(allArticlesLink);
