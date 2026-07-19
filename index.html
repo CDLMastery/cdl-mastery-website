@@ -245,6 +245,136 @@
       </div>
     </section>
 
+       <section class="app-showcase" aria-labelledby="appShowcaseTitle">
+      <div class="section-head">
+        <span class="kicker">REAL APP SCREENS</span>
+
+        <h2 id="appShowcaseTitle">
+          See CDL Mastery in action.
+        </h2>
+
+        <p>
+          Explore the real exam simulator, adaptive flashcards, focused
+          practice, and weak-area recovery system.
+        </p>
+      </div>
+
+      <div class="app-showcase-grid">
+        <button
+          class="app-showcase-card"
+          type="button"
+          data-full="/ui/exam-question-first.png"
+          aria-label="Expand Exam Mode screenshot"
+        >
+          <span class="app-showcase-number">01</span>
+
+          <div class="app-showcase-image">
+            <img
+              src="/ui/exam-question-first.png"
+              alt="CDL Mastery Exam Mode showing a realistic CDL exam question"
+            >
+          </div>
+
+          <div class="app-showcase-copy">
+            <span>EXAM MODE</span>
+
+            <h3>
+              Practice under realistic test conditions
+            </h3>
+
+            <p>
+              Build confidence with a focused DMV-style exam experience.
+            </p>
+          </div>
+        </button>
+
+        <button
+          class="app-showcase-card"
+          type="button"
+          data-full="/ui/flash-question.png"
+          aria-label="Expand Adaptive Flashcards screenshot"
+        >
+          <span class="app-showcase-number">02</span>
+
+          <div class="app-showcase-image">
+            <img
+              src="/ui/flash-question.png"
+              alt="CDL Mastery adaptive flashcard question"
+            >
+          </div>
+
+          <div class="app-showcase-copy">
+            <span>ADAPTIVE FLASHCARDS</span>
+
+            <h3>
+              Strengthen recall one concept at a time
+            </h3>
+
+            <p>
+              Review focused material and keep difficult concepts in
+              rotation.
+            </p>
+          </div>
+        </button>
+
+        <button
+          class="app-showcase-card"
+          type="button"
+          data-full="/ui/practice-question.png"
+          aria-label="Expand Quick Practice screenshot"
+        >
+          <span class="app-showcase-number">03</span>
+
+          <div class="app-showcase-image">
+            <img
+              src="/ui/practice-question.png"
+              alt="CDL Mastery Quick Practice question"
+            >
+          </div>
+
+          <div class="app-showcase-copy">
+            <span>QUICK PRACTICE</span>
+
+            <h3>
+              Turn spare minutes into focused preparation
+            </h3>
+
+            <p>
+              Answer realistic questions with a clean, readable interface.
+            </p>
+          </div>
+        </button>
+
+        <button
+          class="app-showcase-card"
+          type="button"
+          data-full="/ui/weak-overview.png"
+          aria-label="Expand Weak Areas screenshot"
+        >
+          <span class="app-showcase-number">04</span>
+
+          <div class="app-showcase-image">
+            <img
+              src="/ui/weak-overview.png"
+              alt="CDL Mastery Weak Areas analytics overview"
+            >
+          </div>
+
+          <div class="app-showcase-copy">
+            <span>WEAK-AREA RECOVERY</span>
+
+            <h3>
+              Know exactly what needs more work
+            </h3>
+
+            <p>
+              Use performance data to focus on the topics holding you back.
+            </p>
+          </div>
+        </button>
+      </div>
+    </section>
+
     <section class="credibility">
       <p>
         One connected path from first lesson to test-day readiness.
@@ -325,6 +455,7 @@
           <div class="mini-screens">
             <button
               class="screen-thumb"
+              type="button"
               data-full="/ui/progress.png"
             >
               <img
@@ -337,6 +468,7 @@
 
             <button
               class="screen-thumb"
+              type="button"
               data-full="/ui/settings-state.png"
             >
               <img
@@ -380,6 +512,7 @@
       <div class="screen-story">
         <button
           class="phone-frame story-back"
+          type="button"
           data-full="/ui/practice-picker.png"
         >
           <img
@@ -390,6 +523,7 @@
 
         <button
           class="phone-frame story-front"
+          type="button"
           data-full="/ui/practice-feedback.png"
         >
           <img
@@ -414,7 +548,10 @@
       </div>
 
       <div class="journey-grid">
-        <button data-full="/ui/practice-question.png">
+        <button
+          type="button"
+          data-full="/ui/practice-question.png"
+        >
           <span>01</span>
 
           <img
@@ -425,7 +562,10 @@
           <b>Answer a realistic question</b>
         </button>
 
-        <button data-full="/ui/practice-feedback.png">
+        <button
+          type="button"
+          data-full="/ui/practice-feedback.png"
+        >
           <span>02</span>
 
           <img
@@ -436,7 +576,10 @@
           <b>Learn from immediate feedback</b>
         </button>
 
-        <button data-full="/ui/practice-results.png">
+        <button
+          type="button"
+          data-full="/ui/practice-results.png"
+        >
           <span>03</span>
 
           <img
@@ -447,7 +590,10 @@
           <b>Understand the result</b>
         </button>
 
-        <button data-full="/ui/practice-review.png">
+        <button
+          type="button"
+          data-full="/ui/practice-review.png"
+        >
           <span>04</span>
 
           <img
@@ -475,23 +621,41 @@
       </div>
 
       <div class="demo-tabs" role="tablist">
-        <button class="active" data-mode="practice">
+        <button
+          class="active"
+          type="button"
+          data-mode="practice"
+        >
           Quick Practice <span>10</span>
         </button>
 
-        <button data-mode="flashcards">
+        <button
+          type="button"
+          data-mode="flashcards"
+        >
           Flashcards <span>10</span>
         </button>
 
-        <button data-mode="exam">
+        <button
+          type="button"
+          data-mode="exam"
+        >
           Exam Mode <span>10</span>
         </button>
       </div>
 
       <div class="app-demo">
         <div class="demo-appbar">
-          <button id="demoBack" aria-label="Previous">‹</button>
+          <button
+            id="demoBack"
+            type="button"
+            aria-label="Previous"
+          >
+            ‹
+          </button>
+
           <b id="demoTitle">Quick Practice</b>
+
           <span>● 0 day streak</span>
         </div>
 
