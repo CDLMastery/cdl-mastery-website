@@ -287,7 +287,7 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
 
 .app-showcase-image{
   position:relative;
-  height:360px;
+  height:260px;
   overflow:hidden;
   background:#eef0f7;
 }
@@ -296,11 +296,11 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
   content:"";
   position:absolute;
   inset:auto 0 0;
-  height:70px;
+  height:56px;
   background:linear-gradient(
     180deg,
     rgba(255,255,255,0),
-    rgba(255,255,255,.16)
+    rgba(255,255,255,.14)
   );
   pointer-events:none;
 }
@@ -318,7 +318,7 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
 }
 
 .app-showcase-copy{
-  min-height:205px;
+  min-height:190px;
   padding:22px;
 }
 
@@ -350,11 +350,11 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
   }
 
   .app-showcase-image{
-    height:430px;
+    height:300px;
   }
 
   .app-showcase-copy{
-    min-height:175px;
+    min-height:170px;
   }
 }
 
@@ -368,11 +368,11 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
   }
 
   .app-showcase-image{
-    height:350px;
+    height:260px;
   }
 
   .app-showcase-copy{
-    min-height:190px;
+    min-height:180px;
     padding:18px;
   }
 
@@ -387,7 +387,7 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
   }
 
   .app-showcase-image{
-    height:520px;
+    height:300px;
   }
 
   .app-showcase-copy{
@@ -397,6 +397,6 @@ footer{padding:38px max(24px,calc((100vw - 1180px)/2));display:grid;grid-templat
 
 @media(max-width:390px){
   .app-showcase-image{
-    height:450px;
+    height:270px;
   }
 }
