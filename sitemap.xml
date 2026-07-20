@@ -5,6 +5,26 @@
   </url>
 
   <url>
+    <loc>https://cdlmasteryapp.com/about.html</loc>
+  </url>
+
+  <url>
+    <loc>https://cdlmasteryapp.com/contact.html</loc>
+  </url>
+
+  <url>
+    <loc>https://cdlmasteryapp.com/privacy.html</loc>
+  </url>
+
+  <url>
+    <loc>https://cdlmasteryapp.com/terms.html</loc>
+  </url>
+
+  <url>
+    <loc>https://cdlmasteryapp.com/data-deletion.html</loc>
+  </url>
+
+  <url>
     <loc>https://cdlmasteryapp.com/blog/</loc>
   </url>
 
@@ -94,9 +114,5 @@
 
   <url>
     <loc>https://cdlmasteryapp.com/cdl-manuals/ohio.html</loc>
-  </url>
-
-  <url>
-    <loc>https://cdlmasteryapp.com/privacy.html</loc>
   </url>
 </urlset>
